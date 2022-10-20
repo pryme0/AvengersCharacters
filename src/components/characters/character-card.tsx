@@ -1,19 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
-export const SinglePageComponent = (character: any) => {
-  console.log(character.character.image);
-
+export const CharacterCard = (character: any) => {
   return (
     <Container>
-      <Banner src={character.character.image} />
+      <Banner
+        src={`${character.character.thumbnail.path}.${character.character.thumbnail.extension}`}
+      />
       <DetailsSection>
         <Detail>Name: {character.character.name}</Detail>
-        <Detail>Species: {character.character.species}</Detail>
-        <Detail>Status: {character.character.status}</Detail>
       </DetailsSection>
       <ViewMoreContainer>
-        <ViewMoreText>Details</ViewMoreText>
+        <ViewMoreLink href={`/character/${character.character.id}`} > Details </ViewMoreLink>
       </ViewMoreContainer>
     </Container>
   );
@@ -22,7 +20,7 @@ export const SinglePageComponent = (character: any) => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 30%;
+  width: 40%;
   height: 500px;
   margin: 0px 20px;
   border-radius: 10px;
@@ -35,8 +33,9 @@ const Container = styled.div`
 const Banner = styled.div`
   display: flex;
   flex-direction: column;
-  height: 320px;
+  height: 100%;
   width: 100%;
+  object-fit: cover;
   border-top-left-radius: 10px;
   background-image: url(${(props: { src: string }) =>
     props.src ? props.src : ""});
@@ -45,17 +44,17 @@ const Banner = styled.div`
   background-size: cover;
   background-position: center;
   border-bottom: 1px solid #c59f9f;
-`;  
+`;
 
 const DetailsSection = styled.div`
   diaplay: flex;
   flex-direction: coulmn;
-  padding: 20px 20px;
+  padding: 5px 10px;
 `;
 
 const Detail = styled.p`
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 700;
 `;
 
 const ViewMoreContainer = styled.div`
@@ -67,9 +66,13 @@ const ViewMoreContainer = styled.div`
   border-bottom-right-radius: 10px;
 `;
 
-const ViewMoreText = styled.p`
-color: #ffffff;
-cursor: pointer;
-font-size: 18px;
-font-weight:700;
+const ViewMoreLink = styled.a`
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+  &:hover{
+    color: #243272;
+  }
 `;

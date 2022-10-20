@@ -1,30 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { FaSearch } from "react-icons/fa";
-import { statusData, genderData } from "../../../data";
+import { DataContext } from "../../../context";
 
 export const Sidebar = () => {
+  const { searchArray, showSideNav } = useContext(DataContext);
 
-  const [showNav, setShowNav]= useState(false);
-
+  const handleChange = (e: any) => {
+    searchArray(e.target.value);
+  };
 
   return (
-    <Container showNav={showNav}>
+    <Container showSideNav={showSideNav}>
       <ItemContainer>
         <SearchIcon />
-        <SearchItem></SearchItem>
-      </ItemContainer>
-      <ItemContainer>
-        <Select>
-          {statusData.map((data,index) => <option key={index} >{data}</option>
-          )}
-        </Select>
-      </ItemContainer>
-      <ItemContainer>
-        <Select>
-          {genderData.map((data,index) => <option key={index}>{data}</option>
-          )}
-        </Select>
+        <SearchItem onChange={handleChange} />
       </ItemContainer>
     </Container>
   );
@@ -32,16 +22,19 @@ export const Sidebar = () => {
 
 const Container = styled.div`
   display: flex;
-  width: 30%;
+  width: 10%;
+  height: 100%;
   padding: 50px 30px;
   flex-direction: column;
   background: #f0e7e7;
+  margin-top: 15px;
   @media (max-width: 900px) {
-    display:${(props: { showNav:boolean }) =>
-    props.showNav ? "flex" : "none"};
+    display: ${(props: { showSideNav: boolean }) =>
+      props.showSideNav ? "flex" : "none"};
+    position: absolute;
+    width: 30%;
   }
 `;
-
 
 const ItemContainer = styled.div`
   display: flex;
@@ -74,21 +67,4 @@ const SearchIcon = styled(FaSearch)`
   width: 30px;
   font-weight: 300;
   cursor: pointer;
-`;
-
-const Select = styled.select`
-  width: 100%;
-  padding: 0px 15px;
-  height: 30px;
-  border: 0px;
-  option {
-    color: black;
-    background: white;
-    font-weight: small;
-    display: flex;
-  white-space: pre;
-    min-height: 20px;
-    padding: 0px 2px 1px;
-    background: red;
-  }
 `;
